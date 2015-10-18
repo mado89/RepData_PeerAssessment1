@@ -1,13 +1,9 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
-```{r, message=FALSE}
+
+```r
 require(utils)
 require(dplyr)
 if(!file.exists("activity.csv")) {
@@ -37,7 +33,8 @@ data<- addWorkDay(data)
 ```
 
 ## What is mean total number of steps taken per day?
-```{r figure1, fig.height= 5, fig.width=10}
+
+```r
 require(ggplot2)
 data_nna<- na.omit(data)
 
@@ -47,11 +44,14 @@ rmed<- median(data_nna$steps)
 ggplot(data, aes(x=steps)) + geom_histogram(binwidth=25,fill="red") + labs(title="Histogram of total number of steps per day", x = "Steps", y = "Count")
 ```
 
-The mean number of steps is `r smean` the median is `r rmed`. 
+![](figures/figure1-1.png) 
+
+The mean number of steps is 37.3825996 the median is 0. 
 
 ## What is the average daily activity pattern?
 
-```{r figure2}
+
+```r
 # library(scales) # to access breaks/formatting functions
 # scale_x_date(labels = date_format("%d %H:%M"), breaks = date_breaks("5 minutes"))
 
@@ -66,17 +66,20 @@ interval<-dd$Interval[idx]
 ggplot(dd, aes(Interval, Steps)) + geom_line()
 ```
 
+![](figures/figure2-1.png) 
+
 The 5-minute interval, for the average across all the days in the dataset,
-containing the maximum number of steps is `r interval`. 
+containing the maximum number of steps is 835. 
 
 ## Imputing missing values
 ### Total number of missing values in the data set
-The total number of missing value in the dataset is `r sum(is.na(data))`. Which can be calculated using `sum(is.na(data))`
+The total number of missing value in the dataset is 2304. Which can be calculated using `sum(is.na(data))`
 
 ### Strategy for imputation
 One strategy for imputing the missing values could be do devise the data into weekdays and weekenddays calculating the average steps for every interval and using that data for imputing the missing values. 
 
-```{r}
+
+```r
 require(dplyr)
 # dd<- aggregate(data_nna$steps, by=list(data_nna$interval), mean)
 # colnames(dd)<- c("Interval","Steps")
@@ -101,20 +104,24 @@ data_imputed<- impute(data)
 ```
 
 ### Steps taken each day
-```{r figure3, fig.height= 5, fig.width=10}
+
+```r
 imean<- mean(data_imputed$steps)
 imed<- median(data_imputed$steps)
 
 ggplot(data_imputed, aes(x=steps)) + geom_histogram(binwidth=25,fill="red") + labs(title="Histogram of total number of steps per day", x = "Steps", y = "Count")
 ```
 
-The mean number of steps in the imputed data is `r imean` the median is `r imed`. While the median does not differ the mean value differs by a factor of `r round(imean/smean,2)`.
+![](figures/figure3-1.png) 
+
+The mean number of steps in the imputed data is 186.9061931 the median is 0. While the median does not differ the mean value differs by a factor of 5.
 The reason for this is that the mean is a instable meassure. 
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r figure4}
+
+```r
 # library(scales) # to access breaks/formatting functions
 # scale_x_date(labels = date_format("%d %H:%M"), breaks = date_breaks("5 minutes"))
 
@@ -127,3 +134,5 @@ data_imputed %>%
   facet_grid(. ~ Daytype) + 
   labs(title="Average Number of steps per day", x = "Interval", y = "Steps")
 ```
+
+![](figures/figure4-1.png) 
