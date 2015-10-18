@@ -13,8 +13,8 @@ data<- read.table("activity.csv",header=TRUE,sep=",")
 
 # Assignment: always use: echo=TRUE
 knitr::opts_chunk$set(echo=TRUE)
-# Assignment: If your document has figures ... in the figures/ directory
-knitr::opts_chunk$set(fig.path='figures/')
+# Assignment: If your document has figures ... in the figure/ directory
+knitr::opts_chunk$set(fig.path='figure/')
 knitr::opts_chunk$set(message=FALSE)
 knitr::opts_chunk$set(cache=TRUE)
 
@@ -44,7 +44,7 @@ rmed<- median(data_nna$steps)
 ggplot(data, aes(x=steps)) + geom_histogram(binwidth=25,fill="red") + labs(title="Histogram of total number of steps per day", x = "Steps", y = "Count")
 ```
 
-![](figures/figure1-1.png) 
+![](figure/figure1-1.png) 
 
 The mean number of steps is 37.3825996 the median is 0. 
 
@@ -66,7 +66,7 @@ interval<-dd$Interval[idx]
 ggplot(dd, aes(Interval, Steps)) + geom_line()
 ```
 
-![](figures/figure2-1.png) 
+![](figure/figure2-1.png) 
 
 The 5-minute interval, for the average across all the days in the dataset,
 containing the maximum number of steps is 835. 
@@ -112,7 +112,7 @@ imed<- median(data_imputed$steps)
 ggplot(data_imputed, aes(x=steps)) + geom_histogram(binwidth=25,fill="red") + labs(title="Histogram of total number of steps per day", x = "Steps", y = "Count")
 ```
 
-![](figures/figure3-1.png) 
+![](figure/figure3-1.png) 
 
 The mean number of steps in the imputed data is 186.9061931 the median is 0. While the median does not differ the mean value differs by a factor of 5.
 The reason for this is that the mean is a instable meassure. 
@@ -135,4 +135,4 @@ data_imputed %>%
   labs(title="Average Number of steps per day", x = "Interval", y = "Steps")
 ```
 
-![](figures/figure4-1.png) 
+![](figure/figure4-1.png) 
